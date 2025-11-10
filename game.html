@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Juego Interactivo - Verbo To Be</title>
+  <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
+
+  <!-- Hojas de estilo -->
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/game.css" />
+
+  <style>
+    /* ====== BOTÓN DE AYUDA FLOTANTE ====== */
+    #floatingHelpBtn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 55px;
+      height: 55px;
+      font-size: 22px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+      z-index: 1000;
+      transition: transform 0.2s ease, background-color 0.3s ease;
+    }
+
+    #floatingHelpBtn:hover {
+      transform: scale(1.1);
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Protección de acceso -->
+  <script>
+    const user = localStorage.getItem("loggedUser");
+    if (!user) window.location.href = "index.html";
+  </script>
+
+  <!-- =========================
+       HEADER
+  ========================= -->
+  <header>
+    <div class="header-left">
+      <!-- Logo como botón -->
+      <button id="homeBtn" class="logo-btn" title="Volver al inicio">
+        <img src="assets/logo.jpg" alt="Logo del Juego" class="logo" />
+      </button>
+      <div>
+        <h1>¡Bienvenida!</h1>
+        <p>Aprende el verbo <strong>To Be</strong> (presente y pasado)</p>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <button id="logoutBtn">Cerrar sesión</button>
+    </div>
+  </header>
+
+  <!-- =========================
+       CONTENIDO PRINCIPAL
+  ========================= -->
+  <main class="game-container">
+    <section id="intro">
+      <h2>El verbo To Be</h2>
+      <p>
+        El verbo <strong>To Be</strong> significa <em>ser o estar</em>. 
+        Es uno de los verbos más importantes del inglés, ya que se utiliza para expresar identidad, profesión, estado, lugar y emociones.
+      </p>
+
+      <ul>
+        <li><strong>Presente:</strong> am, is, are</li>
+        <li><strong>Pasado:</strong> was, were</li>
+      </ul>
+
+      <h3>Uso en oraciones</h3>
+      <p>
+        A continuación, se muestran ejemplos que te ayudarán a comprender cómo se usa el verbo <strong>To Be</strong> 
+        en diferentes contextos:
+      </p>
+
+      <div class="examples">
+        <div class="example-group">
+          <h4>Presente:</h4>
+          <ul>
+            <li><strong>I am</strong> a teacher. → Yo soy una profesora.</li>
+            <li><strong>He is</strong> happy. → Él está feliz.</li>
+            <li><strong>They are</strong> students. → Ellos son estudiantes.</li>
+          </ul>
+        </div>
+
+        <div class="example-group">
+          <h4>Pasado:</h4>
+          <ul>
+            <li><strong>I was</strong> tired yesterday. → Yo estaba cansada ayer.</li>
+            <li><strong>You were</strong> at the park. → Tú estabas en el parque.</li>
+            <li><strong>We were</strong> friends. → Nosotros éramos amigos.</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>Reglas gramaticales básicas</h3>
+      <ul>
+        <li>En <strong>afirmativo</strong>: <em>She is a doctor.</em></li>
+        <li>En <strong>negativo</strong>: <em>He is not sad.</em></li>
+        <li>En <strong>pregunta</strong>: <em>Are you ready?</em></li>
+      </ul>
+
+      <button id="startGameBtn">Comenzar juego</button>
+    </section>
+
+    <section id="gameArea" class="hidden">
+      <!-- Contenido del juego dinámico -->
+    </section>
+  </main>
+
+  <!-- =========================
+       FOOTER
+  ========================= -->
+  <footer>
+    <p>&copy; 2025 <strong>Juego Educativo del Verbo To Be</strong> - Jasley Alexandra Garcia Mariño</p>
+    <p>Desarrollado para reforzar el aprendizaje del inglés mediante actividades interactivas.</p>
+  </footer>
+
+  <!-- =========================
+       MODAL CONFIRMACIÓN LOGO
+  ========================= -->
+  <div id="homeModal" class="modal hidden">
+    <div class="modal-content">
+      <h3>¿Qué deseas hacer?</h3>
+      <p>Selecciona una opción para continuar:</p>
+      <div class="modal-actions">
+        <button id="continueGameBtn" class="primary">Continuar intento</button>
+        <button id="newGameBtn">Iniciar nuevo juego</button>
+        <button id="exitGameBtn" class="danger">Salir al inicio</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================
+       MODAL DE AYUDA (desde /components/modal.html)
+  ========================= -->
+  <div id="helpModalContainer"></div>
+
+  <!-- =========================
+       SCRIPTS
+  ========================= -->
+  <script src="js/auth.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/main.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      // Mostrar nombre del usuario
+      const username = localStorage.getItem("loggedUser");
+      const headerTitle = document.querySelector("header h1");
+      if (headerTitle && username) headerTitle.textContent = `¡Bienvenida ${username}!`;
+
+      // Logo → abre modal de opciones
+      document.getElementById("homeBtn").addEventListener("click", () => {
+        document.getElementById("homeModal").classList.remove("hidden");
+      });
+
+      // Botones del modal de logo
+      document.getElementById("continueGameBtn").addEventListener("click", () => {
+        document.getElementById("homeModal").classList.add("hidden");
+      });
+
+      document.getElementById("newGameBtn").addEventListener("click", () => {
+        localStorage.removeItem("gameProgress");
+        window.location.reload();
+      });
+
+      document.getElementById("exitGameBtn").addEventListener("click", () => {
+        localStorage.removeItem("loggedUser");
+        window.location.href = "index.html";
+      });
+
+      // ===== Crear botón flotante de ayuda =====
+     
+
+      helpBtn.addEventListener("click", async () => {
+        const container = document.getElementById("helpModalContainer");
+
+        if (!container.hasChildNodes()) {
+          const res = await fetch("components/modal.html");
+          const html = await res.text();
+          container.innerHTML = html;
+        }
+
+        const modal = container.querySelector("#helpModal");
+        modal.classList.remove("hidden");
+
+        const closeBtn = modal.querySelector(".close-btn");
+        closeBtn.addEventListener("click", () => {
+          modal.classList.add("hidden");
+        });
+      });
+    });
+  </script>
+</body>
+</html>

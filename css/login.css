@@ -1,0 +1,142 @@
+/* 🔐 ESTILOS DEL INICIO DE SESIÓN - login.css */
+
+/* ------------------- BASE LAYOUT ------------------- */
+body.login-body {
+    /* Fondo más moderno y dinámico: Gradiente azul/marino profundo */
+    background: 
+        linear-gradient(135deg, #1d3557, #457b9d); /* Azul oscuro a medio */
+    background-size: 400% 400%; /* Permite la animación de movimiento del gradiente */
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Usamos min-height para asegurar que cubra toda la pantalla, incluso en navegadores móviles */
+    min-height: 100vh; 
+    margin: 0; /* Asegura que no haya scrollbars no deseados */
+    padding: 20px; /* Padding general para que la caja no toque los bordes en móvil */
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+
+    /* Animación sutil de fondo */
+    animation: gradientShift 20s ease infinite;
+}
+
+/* ------------------- LOGIN CONTAINER ------------------- */
+.login-container {
+    background-color: #fff;
+    padding: 40px 50px;
+    border-radius: 15px;
+    /* Sombra más profunda y definida para contraste con el nuevo fondo oscuro */
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3); 
+    text-align: center;
+    /* Hacemos el ancho flexible */
+    width: 100%;
+    max-width: 400px; 
+    animation: fadeIn 0.6s ease;
+}
+
+/* ------------------- TYPOGRAPHY ------------------- */
+.login-container h1 {
+    font-size: 1.8rem;
+    color: #1a1a1a;
+    margin-bottom: 5px;
+}
+
+.login-container .highlight {
+    color: #e63946;
+}
+
+.login-container h2 {
+    font-size: 1.1rem;
+    margin-bottom: 25px; 
+    color: #555;
+}
+
+/* ------------------- FORM ELEMENTS ------------------- */
+/* Inputs */
+#loginForm input {
+    width: 100%;
+    padding: 12px 15px; 
+    margin: 10px 0;
+    border-radius: 8px; 
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    box-sizing: border-box; 
+    transition: 0.3s ease;
+}
+
+#loginForm input:focus {
+    outline: none;
+    border-color: #457b9d;
+    box-shadow: 0 0 8px rgba(69, 123, 157, 0.5); 
+}
+
+/* Botón */
+#loginForm button {
+    background-color: #457b9d;
+    color: white;
+    border: none;
+    width: 100%;
+    padding: 12px 0; 
+    margin-top: 20px; 
+    border-radius: 8px;
+    font-size: 1.1rem; 
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+    /* Sombra para el botón */
+    box-shadow: 0 4px 10px rgba(69, 123, 157, 0.4);
+}
+
+#loginForm button:hover {
+    background-color: #35607a;
+    box-shadow: 0 6px 15px rgba(69, 123, 157, 0.6);
+}
+
+#loginForm button:active {
+    transform: scale(0.99); 
+}
+
+
+/* Error */
+#errorMessage {
+    color: #e63946;
+    font-size: 0.9rem;
+    margin-top: 15px;
+    height: 20px;
+}
+
+/* Animación de entrada de la caja */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); } 
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Animación del gradiente de fondo: Mueve el gradiente de forma sutil */
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* ------------------- MEDIA QUERIES (Móviles Pequeños) ------------------- */
+@media (max-width: 450px) {
+    .login-container {
+        /* Usamos el 95% del ancho para asegurar que nunca haya scroll horizontal */
+        width: 95%; 
+        /* Reducimos el padding interno para dispositivos muy pequeños */
+        padding: 30px 20px; 
+    }
+    .login-container h1 {
+        font-size: 1.6rem;
+    }
+    #loginForm button {
+        font-size: 1rem;
+    }
+}
